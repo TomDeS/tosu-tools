@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react"
 
-import { bicValues } from './bicValues'
+import { bicValues } from "./bicValues"
 import { randomNumber } from "../../utilities/randomNumber"
-import CopyButton from '../../utilities/copyButton'
+import CopyButton from "../../utilities/copyButton"
 
 const GenerateBankAccount = ({
-  countryCode = 'BE',
+  countryCode = "BE",
 }: {
   countryCode: string
 }) => {
@@ -13,10 +13,10 @@ const GenerateBankAccount = ({
   let bic: string = getBicCode(countryCode).toString()
   // Get digits
   switch (countryCode) {
-    case 'NL':
+    case "NL":
       digits = getNumbers(10, true)
       break
-    case 'BE':
+    case "BE":
       let subDigits = getNumbers(7, false)
       digits = calculateModulo(bic, subDigits)
       break
@@ -97,7 +97,7 @@ function getNumbers(count: number, elevenTest: boolean): number {
     }
   }
 
-  return parseInt(digits.join(''), 10)
+  return parseInt(digits.join(""), 10)
 }
 
 function calculateModulo(bankIdentification, digits): number {
@@ -115,9 +115,9 @@ function calculateModulo(bankIdentification, digits): number {
   const modulo: number = number % 97
 
   // 4. Add result from modulo to number
-  const checkSum = modulo === 97 ? '97' : modulo.toString().padStart(2, '0')
+  const checkSum = modulo === 97 ? "97" : modulo.toString().padStart(2, "0")
 
-  const result: number = parseInt('' + digits + checkSum, 10)
+  const result: number = parseInt("" + digits + checkSum, 10)
 
   // 5. Return new digits with modulo at the end
   return result
@@ -141,13 +141,13 @@ function perform11test(nr: number[]): boolean {
 }
 
 function getBicCode(countryCode: string): string {
-  let bic: string = ''
+  let bic: string = ""
 
   // Loop through the data and if we have a match, take those.
   // Array source: https://www.betaalvereniging.nl/en/focus/giro-based-and-online-payments/bank-identifier-code-bic-for-sepa-transactions/
   const allBics: string[] = bicValues.reduce((codes: any, currentValue) => {
-    if (currentValue['countryCode'] === countryCode.toUpperCase()) {
-      codes.push(currentValue['BIC'])
+    if (currentValue["countryCode"] === countryCode.toUpperCase()) {
+      codes.push(currentValue["BIC"])
     }
     return codes
   }, [])
@@ -161,14 +161,14 @@ function getBicCode(countryCode: string): string {
     return bic
   }
   // Fallback: if allBics is empty, generate a number based BIC
-  bic = randomNumber(0, 999).toString().padStart(3, '0')
+  bic = randomNumber(0, 999).toString().padStart(3, "0")
 
   return bic
 }
 
 function getLetterValue(letters: string): string {
   let i: number = 0
-  let letterValue: string = ''
+  let letterValue: string = ""
 
   for (i = 0; i < letters.length; i++) {
     // 'A' === 65, but we need it as 10, B=11 and so on
@@ -184,15 +184,15 @@ function calculateCheckSum(
   numbers: number
 ): string {
   const countryValue = getLetterValue(country)
-  let identification: string = ''
+  let identification: string = ""
 
-  if (country === 'NL') {
+  if (country === "NL") {
     identification = getLetterValue(bankIdentification)
   } else {
     identification = bankIdentification
   }
 
-  const checkCombination = identification + numbers + countryValue + '00'
+  const checkCombination = identification + numbers + countryValue + "00"
 
   /*
   Piece-wise calculation D mod 97 can be done in many ways. One such way is as follows:
@@ -218,7 +218,7 @@ function calculateCheckSum(
   accString = accString.substring(9, accString.length)
 
   while (accString.length > 0) {
-    checkNr = '' + modNr + accString.substring(0, 7)
+    checkNr = "" + modNr + accString.substring(0, 7)
     modNr = parseInt(checkNr, 10) % 97
     accString = accString.substring(7, accString.length)
 
@@ -231,9 +231,9 @@ function calculateCheckSum(
 
   // If checksum <= 9; add a leading 0.
   if (checkSum <= 9) {
-    result = '0' + checkSum
+    result = "0" + checkSum
   } else {
-    result = '' + checkSum
+    result = "" + checkSum
   }
 
   return result
