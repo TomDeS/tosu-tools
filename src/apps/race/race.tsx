@@ -184,11 +184,12 @@ function Form(props) {
   }
 
   const startRace = e => {
+    e.preventDefault()
     props.startRace()
   }
 
   return (
-    <form>
+    <form  onSubmit={startRace}>
       <div className="row">
         <input
           type="text"
@@ -200,7 +201,6 @@ function Form(props) {
           placeholder="Racer name"
         />
         <button
-          type="submit"
           className="button"
           onClick={handleSubmit}
           disabled={props.raceStarted}
@@ -363,6 +363,7 @@ const StartRace = props => {
       onClick={handler}
       className="button"
       disabled={props.isDisabled || started}
+      type="submit"
     >
       Start!
     </button>
