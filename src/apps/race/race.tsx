@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import useSound from "use-sound"
 
+import { randomNumber } from "../../utilities/randomNumber"
 import nyan from "../../assets/sound/nyan.mp3"
 
 /**
@@ -83,9 +84,7 @@ export default class Race extends React.Component<any, RaceProps> {
         state => {
           // Select a random score from the availble ones
           const racerScore = this.state.availableScores[
-            Math.floor(
-              Math.random() * (this.state.availableScores.length - 0 + 1)
-            ) + 0
+            randomNumber(0, this.state.availableScores.length)
           ]
 
           // That score is no longer available
