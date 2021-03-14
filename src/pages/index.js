@@ -4,10 +4,12 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Race from "../apps/race/race"
+import Crypto from "../apps/crypto/crypto"
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
+    <Crypto />
 
     <Race />
 
