@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import useSound from "use-sound"
 
-import { randomNumber } from "../../utilities/randomNumber"
+//import { randomNumber } from "../../utilities/randomNumber"
 import nyan from "../../assets/sound/nyan.mp3"
 
 /**
@@ -50,6 +50,7 @@ export default class Race extends React.Component<any, RaceProps> {
     this.deleteRacer = this.deleteRacer.bind(this)
     this.startRace = this.startRace.bind(this)
     this.changeSettings = this.changeSettings.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   deleteRacer(name: string) {
@@ -84,7 +85,10 @@ export default class Race extends React.Component<any, RaceProps> {
         state => {
           // Select a random score from the availble ones
           const racerScore = this.state.availableScores[
-            randomNumber(0, this.state.availableScores.length)
+            Math.floor(
+              Math.random() * (this.state.availableScores.length - 0 + 1)
+            ) + 0
+            //randomNumber(0, this.state.availableScores.length)
           ]
 
           // That score is no longer available
@@ -119,9 +123,18 @@ export default class Race extends React.Component<any, RaceProps> {
     })
   }
 
+  handleSubmit = event => {
+    event.preventDefault()
+    alert(`Welcome!`)
+  }
+
   render() {
     return (
       <>
+        <form onSubmit={this.handleSubmit}>
+          <button type="submit">Submit</button>
+        </form>
+
         <Form
           addRacer={this.addRacer}
           startRace={this.startRace}
@@ -189,7 +202,7 @@ function Form(props) {
   }
 
   return (
-    <form  onSubmit={startRace}>
+    <form onSubmit={startRace}>
       <div className="row">
         <input
           type="text"
